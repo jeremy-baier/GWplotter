@@ -3,7 +3,7 @@ function transformData(data, display, type, index, dataparams, params) {
 	
 	switch(type) {
 		case 0: // PTAs
-			outdata = transformPTA(outdata, dataparams, params);
+			outdata = transformPTA(params);
 			break;
 	}
 
@@ -30,23 +30,49 @@ function transformData(data, display, type, index, dataparams, params) {
 	return outdata;
 }
 
-function transformPTA(data, params0, params) {
-	var logfmin = Math.log(1.0/params.T);
+// function transformPTA(data, params0, params) {
+// 	var logfmin = Math.log(1.0/params.T);
+// 	var logfmax = Math.log(1.0/params.deltaT);
+// 	var numpoints = 25;
+	
+// 	var freqs = [Math.exp(logfmin-0.0001)];
+// 	for (i=0; i<numpoints; i++) {
+// 		freqs.push(Math.exp(logfmin + i*(logfmax-logfmin)/(numpoints-1)));
+// 	}
+	
+// 	return freqs.map(function(f, index) {
+// 		if (index == 0) {
+// 			return [f, 1.0e-5];
+// 		} else {
+// 			var nnm1 = 0.5*params.Np*(params.Np-1);
+// 			var Tfrac = params.deltaT / params.T;
+// 			return [f, 233*2*params.deltatrms*Math.sqrt(Tfrac/nnm1)*f];
+// 		}
+// 	});
+// }
+
+
+function transformPTA(params) {
+	var logfmin = Math.log(1.0/(6*params.T));
 	var logfmax = Math.log(1.0/params.deltaT);
-	var numpoints = 25;
+	var numpoints = 100;
 	
 	var freqs = [Math.exp(logfmin-0.0001)];
 	for (i=0; i<numpoints; i++) {
 		freqs.push(Math.exp(logfmin + i*(logfmax-logfmin)/(numpoints-1)));
 	}
-	
+	var fyr_idx = findClosestIndex(freqs, 1/(365.25*24*3600));
+	var f6mo_idx = findClosestIndex(freqs, 1/(365.25*24*3600/2));
+	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
+	var sqrt_noise_power = (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
+	// h_c = Math.sqrt(f*S_eff)
 	return freqs.map(function(f, index) {
-		if (index == 0) {
-			return [f, 1.0e-5];
+		if (index == fyr_idx) {
+			return [f, 10*28.645*sqrt_noise_power*f**(1.5)/sqrt_Np_pairs*(1+1/(f*params.T))**3];
+		} else if (index == f6mo_idx) {
+			return [f, 1.1*28.645*sqrt_noise_power*f**(1.5)/sqrt_Np_pairs*(1+1/(f*params.T))**3];
 		} else {
-			var nnm1 = 0.5*params.Np*(params.Np-1);
-			var Tfrac = params.deltaT / params.T;
-			return [f, 233*2*params.deltatrms*Math.sqrt(Tfrac/nnm1)*f];
+			return [f, 28.645*sqrt_noise_power*f**(1.5)/sqrt_Np_pairs*(1+1/(f*params.T))**3];
 		}
 	});
 }
@@ -96,7 +122,17 @@ function PTAoptions(index, params) {
 		<input type='text' class='T' name='" + index + "T' id='id" + index + "T' value='" + params.T / (365.25 * 24 * 60 * 60) + "' title='Time between the first and last pulsar observations. The characteristic strain ~ 1/sqrt(T), and the lower frequency cut-off is equal to 1/T.'>\
 		</div>";
 	
-	return numPulsars + T + dt + dtrms;
+	var log10A_irn = "<div class=\"parameter\">\
+		<label for='id" + index + "log10A_irn'>Log10 Amp of intrinsic red noise: </label>\
+		<input type='text' class='log10A_irn' name='" + index + "log10A_irn' id='id" + index + "log10A_irn' value='" + params.log10A_irn + "' title='The log10 Amplitude of the intrinsic red noise in all pulsars.'>\
+		</div>";
+
+	var gamma_irn = "<div class=\"parameter\">\
+		<label for='id" + index + "gamma_irn'>Spectral index of intrinsic red noise: </label>\
+		<input type='text' class='gamma_irn' name='" + index + "gamma_irn' id='id" + index + "gamma_irn' value='" + params.gamma_irn + "' title='The spectral index of the intrinsic red noise in all pulsars.'>\
+		</div>";
+	
+	return numPulsars + T + dt + dtrms + log10A_irn + gamma_irn;
 }
 
 function Pulsarsoptions(index, params) {
@@ -138,4 +174,19 @@ function toEnergySpec(data) {
 		var hc = val[1];
 		return [f, 2*Math.pow(Math.PI*f*hc/H0,2)];
 	});
+}
+
+function findClosestIndex(freqs, givenNumber) {
+    let closestIndex = 0;
+    let smallestDifference = Math.abs(freqs[0] - givenNumber);
+
+    for (let i = 1; i < freqs.length; i++) {
+        let difference = Math.abs(freqs[i] - givenNumber);
+        if (difference < smallestDifference) {
+            smallestDifference = difference;
+            closestIndex = i;
+        }
+    }
+
+    return closestIndex;
 }
