@@ -64,7 +64,12 @@ function transformPTA(params) {
 	var fyr_idx = findClosestIndex(freqs, 1/(365.25*24*3600));
 	var f6mo_idx = findClosestIndex(freqs, 1/(365.25*24*3600/2));
 	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
-	var sqrt_noise_power = (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
+	function sqrt_noise_power(params, f) {
+		return (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
+		}
+	function sky_response(params, f) {
+		return (1+1/(f*params.T))**3;
+	}
 	// h_c = Math.sqrt(f*S_eff)
 	return freqs.map(function(f, index) {
 		if (index == fyr_idx) {
@@ -72,7 +77,7 @@ function transformPTA(params) {
 		} else if (index == f6mo_idx) {
 			return [f, 1.1*28.645*sqrt_noise_power*f**(1.5)/sqrt_Np_pairs*(1+1/(f*params.T))**3];
 		} else {
-			return [f, 28.645*sqrt_noise_power*f**(1.5)/sqrt_Np_pairs*(1+1/(f*params.T))**3];
+			return [f, 28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params, f)];
 		}
 	});
 }
