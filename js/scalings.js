@@ -54,7 +54,7 @@ function transformData(data, display, type, index, dataparams, params) {
 
 function transformPTA(params) {
 	var logfmin = Math.log(1.0/(10*params.T));
-	var logfmax = Math.log(1.0/(params.deltaT/2));
+	var logfmax = Math.log(1.0/(params.deltaT));
 	var numpoints = 100;
 	
 	var freqs = [Math.exp(logfmin-0.0001)];
@@ -74,9 +74,9 @@ function transformPTA(params) {
 	// h_c = Math.sqrt(f*S_eff)
 	return freqs.map(function(f, index) {
 		if (index == fyr_idx) {
-			return [f, 10*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
+			return [f, 12*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
 		} else if (index == f6mo_idx) {
-			return [f, 1.1*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
+			return [f, 1.2*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
 		} else {
 			return [f, 28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params, f)];
 		}

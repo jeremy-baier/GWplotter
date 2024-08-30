@@ -551,6 +551,20 @@ $( document ).ready(function() {
 					plotGraph(plotDisplay);
 				}
 			})
+			.on('change', 'input.log10A_irn', function() {
+				var newval = parseInt($(this).val());
+				if (!isNaN(newval)) {
+					datasets[$(this).attr('name').slice(0,-10)].params.log10A_irn = newval;
+					plotGraph(plotDisplay);
+				}
+			})
+			.on('change', 'input.gamma_irn', function() {
+				var newval = parseInt($(this).val());
+				if (!isNaN(newval)) {
+					datasets[$(this).attr('name').slice(0,-9)].params.gamma_irn = newval;
+					plotGraph(plotDisplay);
+				}
+			})
 			.on('change', 'input.Amp', function() {
 				var newval = parseFloat($(this).val());
 				if (!isNaN(newval)) {
