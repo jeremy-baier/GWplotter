@@ -61,8 +61,9 @@ function transformPTA(params) {
 	for (i=0; i<numpoints; i++) {
 		freqs.push(Math.exp(logfmin + i*(logfmax-logfmin)/(numpoints-1)));
 	}
-	var fyr_idx = findClosestIndex(freqs, 1/(365.25*24*3600));
-	var f6mo_idx = findClosestIndex(freqs, 1/(365.25*24*3600/2));
+	var fyr = 1/(365.25*24*3600);
+	var fyr_idx = findClosestIndex(freqs, fyr);
+	var f6mo_idx = findClosestIndex(freqs, fyr/2);
 	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
 	function sqrt_noise_power(params, f) {
 		return (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
