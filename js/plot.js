@@ -427,7 +427,9 @@ $( document ).ready(function() {
 				"T" : 20*365.25*24*60*60, 
 				"deltaT" : 1.20960e6, 
 				"deltatrms" : 1.0e-7, 
-				"Np" : 100.0
+				"Np" : 100.0,
+				"log10A_irn": -15.0,
+				"gamma_irn": 2.667,
 			}
 		};
 		var PTAdataset = new dataset(PTAobj);
