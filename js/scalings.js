@@ -53,8 +53,10 @@ function transformData(data, display, type, index, dataparams, params) {
 
 
 function transformPTA(params) {
-	var logfmin = Math.log(1.0/(10*params.T));
-	var logfmax = Math.log(1.0/(params.deltaT));
+	// var logfmin = Math.log(1.0/(15*params.T));
+	// var logfmax = Math.log(1.0/(params.deltaT));
+	var logfmin = Math.log(1e-10);
+	var logfmax = Math.log(1e-6);
 	var numpoints = 100;
 	
 	var freqs = [Math.exp(logfmin-0.0001)];
@@ -64,6 +66,7 @@ function transformPTA(params) {
 	var fyr = 1/(365.25*24*3600);
 	var fyr_idx = findClosestIndex(freqs, fyr);
 	var f6mo_idx = findClosestIndex(freqs, fyr*2);
+	// calculat 1/yr and 1/6mo and then artificially inflate the values
 	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
 	function sqrt_noise_power(params, f) {
 		return (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
@@ -74,9 +77,9 @@ function transformPTA(params) {
 	// h_c = Math.sqrt(f*S_eff)
 	return freqs.map(function(f, index) {
 		if (index == fyr_idx) {
-			return [f, 12*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
+			return [f, 40*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
 		} else if (index == f6mo_idx) {
-			return [f, 1.2*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
+			return [f, 2.5*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
 		} else {
 			return [f, 28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params, f)];
 		}
