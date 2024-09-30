@@ -66,7 +66,7 @@ function transformPTA(params) {
 	var fyr = 1/(365.25*24*3600);
 	var fyr_idx = findClosestIndex(freqs, fyr);
 	var f6mo_idx = findClosestIndex(freqs, fyr*2);
-	// calculat 1/yr and 1/6mo and then artificially inflate the values
+	// find 1/yr and 1/6mo and then artificially inflate the values
 	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
 	function sqrt_noise_power(params, f) {
 		return (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
