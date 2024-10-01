@@ -39,17 +39,20 @@ $$ S_{\text{eff}}(f) = \left(\frac{96}{N_{\rm psr}\left(N_{\rm psr}-1\right)} \r
 
 The noise-weighted inverse transmission function, $\mathcal{N}_I^{-1}(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}_I^{-1}$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
 
-$$\mathcal{N}_{I}^{-1}(f) \approx \frac{\mathcal{T}_{I}(f)}{P_{N}(f)}, \tag{6}$$
+$$\mathcal{N}_{I}^{-1}(f) \approx \frac{\mathcal{T}_{I}(f)}{P_{N}(f)}, 
+\tag{6}$$
 
 where $\mathcal{T}$ is a transmission function and $P_{N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
 
-$$\mathcal{T}_{I}(f) \approx \left(1+\frac{1}{T_{\rm obs}f}\right)^{-6},\tag{7}$$
+$$\mathcal{T}_{I}(f) \approx \left(1+\frac{1}{T_{\rm obs}f}\right)^{-6}, 
+\tag{7}$$
 
 as in done in [3]. (See [4] for more details on tranmissions function approximations.) In order to simulate the effect of the timing model fit to the solar system barycenter and parallax parameters, under this simplified tranmission function, we can artificially add characteristic insensitivities at frequencies of $1/\rm yr$ and $1/(2\rm yr)$.
 
 Other than white noise, the dominant source of noise is PTAs is a red noise due to changes in the dispersion measure so we let,
 
-$$P_{N}=P_{\rm WN}+P_{\rm DM} = 2\Delta t\sigma^2 + A_{\rm DM}f^{-\gamma_{\rm DM}}, \tag{8}$$
+$$P_{N}=P_{\rm WN}+P_{\rm DM} = 2\Delta t\sigma^2 + A_{\rm DM}f^{-\gamma_{\rm DM}}, 
+\tag{8}$$
 
 where $\sigma$ is the time of arrival uncertainty and $\Delta t$ is the time between observations and the changes in dispersion measure are modeled as red noise and parameterized by a power law with amplitude $A$ and spectral index $\gamma$.
 
