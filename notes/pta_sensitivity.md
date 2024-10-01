@@ -49,10 +49,10 @@ $$
 
 The noise-weighted inverse transmission function, $\mathcal{N}^{-1}_I(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}^{-1}_I(f)$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
 
-$$
-\mathcal{N}^{-1}_I(f) \approx \frac{\mathcal{T}_I(f)}{P_{\rm N}(f)}\,
+```math
+\mathcal{T}_I(f) \approx \left(1+\frac{1}{T_{\rm obs}f}\right)^{-6}
 \tag{6}
-$$
+```
 
 where $\mathcal{T}$ is a transmission function and $P_{\rm N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
 
