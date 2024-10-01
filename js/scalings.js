@@ -67,21 +67,22 @@ function transformPTA(params) {
 	var fyr_idx = findClosestIndex(freqs, fyr);
 	var f6mo_idx = findClosestIndex(freqs, fyr*2);
 	// find 1/yr and 1/6mo and then artificially inflate the values
-	var sqrt_Np_pairs = Math.sqrt(0.5*params.Np*(params.Np-1));
+	// this is really Np_pairs^(1/4) (and the combinatorial factor of 2 is in the 96)
+	var Np_pairs = Math.pow(params.Np*(params.Np-1), 0.25);
 	function sqrt_noise_power(params, f) {
 		return (2*params.deltatrms**2*(params.deltaT)+10**params.log10A_irn*(fyr/f)**(params.gamma_irn))**0.5;
 		}
-	function sky_response(params, f) {
+	function sqrt_sky_response(params, f) {
 		return (1+1/(f*params.T))**3;
 	}
 	// h_c = Math.sqrt(f*S_eff)
 	return freqs.map(function(f, index) {
 		if (index == fyr_idx) {
-			return [f, 40*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
+			return [f, 40*34.06499*sqrt_noise_power(params,f)*f**(1.5)/Np_pairs*sqrt_sky_response(params,f)];
 		} else if (index == f6mo_idx) {
-			return [f, 2.5*28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params,f)];
-		} else {
-			return [f, 28.645*sqrt_noise_power(params,f)*f**(1.5)/sqrt_Np_pairs*sky_response(params, f)];
+			return [f, 2.5*34.06499*sqrt_noise_power(params,f)*f**(1.5)/Np_pairs*sqrt_sky_response(params,f)];
+		} else {//constant is sqrt(12 pi^2)*96^(0.25)
+			return [f, 34.06499*sqrt_noise_power(params,f)*f**(1.5)/Np_pairs*sqrt_sky_response(params, f)];
 		}
 	});
 }
