@@ -1,5 +1,7 @@
 # PTA Background Sensitivity Notes
 
+### Jeremy G. Baier, 2024
+
 This addendum contains notes for the updated pulsar timing array (PTA) sensitivity curves for the gravitational wave background. Note that this addendum has not been formally peer reviewed.
 
 We will start from the realistic sensitivity curves presented in eq. 92 of *Hazboun et al. (2019)*, [1], 
@@ -20,27 +22,26 @@ We now wish to incorporate the following simplifying assumptions from *Moore et 
 
 As we will discuss later, we relax the assumption of no red noise.
 
-Assuming a uniform distribution of pulsars across the sky, we marginalize the square of Hellings and Downs coefficients over this uniform distribution, which yields $\frac{1}{48}$,
-
-$$ S_{\text{eff}}(f) = \left( \sum_I \sum_{J > I} \frac{T_{IJ}}{T_{\text{obs}}} \frac{1}{48\space S_I(f) S_J(f)} \right)^{-1/2}.
-\tag{3}$$
-
-Assuming that all of the pulsars are observed for the full timespan of the dataset means that their timespan overlaps are each equal to the time span of the data set as well,
+Assuming a uniform distribution of pulsars across the sky, we marginalize the square of Hellings and Downs coefficients over this uniform distribution, which yields $\frac{1}{48}$. Next, we assume that all the pulsars in the PTA are observed for the full timespan of the dataset, meaning that their overlapping timespans are each equal to the timespan of the data set as well,
 
 $$ S_{\text{eff}}(f) = \left( \sum_I \sum_{J > I} \frac{1}{48\space S_I(f) S_J(f)} \right)^{-1/2}.
-\tag{4}$$ 
+\tag{3}$$ 
 
-Assuming that all the pulsars have independent and identically distributed noise properties and are observed with the same cadence,$S_I \approx S_J$,
+Assuming that all the pulsars have independent and identically distributed noise properties and are observed with the same cadence, $S_I \approx S_J$, so that,
 
 $$ S_{\text{eff}}(f) = \left(\frac{N_{\rm psr}\left(N_{\rm psr}-1\right)}{2*48 \space S_I(f)^2} \right)^{-1/2}.
-\tag{5}$$
+\tag{4}$$
 
 From Equation 2 it follows that,
 
 $$ S_{\text{eff}}(f) = \left(\frac{96}{N_{\rm psr}\left(N_{\rm psr}-1\right)} \right)^{1/2}\frac{12\pi^2f^2}{\mathcal{N}^{-1}_I(f)}.
-\tag{6}$$
+\tag{5}$$
 
-The noise-weighted inverse transmission function, $\mathcal{N}_I^{-1}(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}_I^{-1}$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s), $\mathcal{N}_I^{-1}(f)\approx\mathcal{T}_I(f)/P_{N}(f)$, where $\mathcal{T}$ is a transmission function and $P_{N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
+The noise-weighted inverse transmission function, $\mathcal{N}_I^{-1}(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}_I^{-1}$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
+
+$$\mathcal{N}_I^{-1}(f)\approx\mathcal{T}_I(f)/P_{N}(f), \tag{6}$$
+
+where $\mathcal{T}$ is a transmission function and $P_{N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
 
 $$\mathcal{T}_I(f)\approx\left(1+\frac{1}{T_{\rm obs}f}\right)^{-6},\tag{7}$$
 
