@@ -37,12 +37,12 @@ From Equation 2 it follows that,
 $$ S_{\text{eff}}(f) = \left(\frac{96}{N_{\rm psr}\left(N_{\rm psr}-1\right)} \right)^{1/2}\frac{12\pi^2f^2}{\mathcal{N}^{-1}_I(f)}.
 \tag{5}$$
 
-The noise-weighted inverse transmission function, $\mathcal{N}_I^{-1}(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}_I^{-1}$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
+The noise-weighted inverse transmission function, $\mathcal{N}^{-1}_{I}(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}^{-1}_{I}(f)$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
 
-$$\mathcal{N}_{I}^{-1}(f) \approx \frac{\mathcal{T}_{I}(f)}{P_{N}(f)}, 
+$$\mathcal{N}^{-1}_{I}(f) \approx \frac{\mathcal{T}_{I}(f)}{P_{\rm N}(f)}, 
 \tag{6}$$
 
-where $\mathcal{T}$ is a transmission function and $P_{N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
+where $\mathcal{T}$ is a transmission function and $P_{\rm N}(f)$ is the power in the noise. See Section 2 in [1] for a more in depth discussion of PTA transmission functions and the validity of this approximation. We can further approximate,
 
 $$\mathcal{T}_{I}(f) \approx \left(1+\frac{1}{T_{\rm obs}f}\right)^{-6}, 
 \tag{7}$$
