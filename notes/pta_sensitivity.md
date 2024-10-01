@@ -47,10 +47,10 @@ S_{\text{eff}}(f) = \left(\frac{96}{N_{\rm psr}\left(N_{\rm psr}-1\right)} \righ
 \tag{5}
 $$
 
-The noise-weighted inverse transmission function, $\mathcal{N}^{-1}_{I}(f),$ is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}^{-1}_{I}(f)$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
+The noise-weighted inverse transmission function, $\mathcal{N}^{-1}_I(f)$, is a response function which effectively absorbs power as a result of fitting to a timing model. In practice, the computation of $\mathcal{N}^{-1}_I(f)$ is the most expensive part of a sensitivity curve calculation, so we seek to approximate it. For a PTA with red noise(s),
 
 $$
-\mathcal{N}^{-1}_{I}(f) \approx \frac{\mathcal{T}_{I}(f)}{P_{\rm N}(f)}, 
+\mathcal{N}^{-1}_I(f) \approx \frac{\mathcal{T}_I(f)}{P_{\rm N}(f)}, 
 \tag{6}
 $$
 
